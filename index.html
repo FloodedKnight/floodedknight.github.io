@@ -1,12 +1,11 @@
-<!-- First commit is a copy paste :P -->
-<!-- As long as this comment is here, I don't really understand the code and am just messing around with stuff -->
-
 <!DOCTYPE html>
+<!--Its all chatgpt-->
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FloodedKnight.Dev</title>
+  <title>Flooded 8)</title>
   <link rel="icon" type="image/png" href="favicon.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
@@ -27,12 +26,88 @@
       background: #000;
       color: white;
       overflow: hidden;
-      animation: fadeIn 1s ease-in-out;
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(0px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .buttons-container {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translateX(calc(-50% + 20px)); /* Shift 30px right */
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 90%;
+        
+    }
+
+    .custom-button {
+      padding: 20px 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2c2c2c, #2c2c2c);
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      font-family: 'Rubik', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin: 10px;
+      text-decoration: underline;
+      border: none; /* Removed border for cleaner design */
+    }
+
+    .custom-button:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px) scale(1.05);
+    }
+
+    .custom-button:active {
+      transform: translateY(1px) scale(1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    #dynamic-text {
+      font-size: 0;
+      letter-spacing: 0;
+      position: absolute;
+      top: 30%;
+      text-align: center;
+      width: 100%;
+    }
+
+    #dynamic-text span {
+      font-size: 2.8rem;
+      display: inline-block;
+      margin: 0;
+
+      padding: 0;
+    }
+
+    @keyframes blurPulse {
+      0%, 100% {
+        filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.5));
+      }
+      50% {
+        filter: drop-shadow(0 4px 25px rgba(255, 255, 255, 1));
+      }
+    }
+
+    @keyframes randomTextReveal {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(360deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0);
+      }
     }
 
     body::before {
@@ -46,15 +121,19 @@
       background-size: cover;
       z-index: -1;
       opacity: 1;
-   }
+    }
+    
 
     .gradient-text {
+      display: inline-block;
       font-size: 50px;
+      top: 0%;
       font-weight: bold;
       background: linear-gradient(45deg, #ff6a00, #ee0979);
       -webkit-background-clip: text;
       color: transparent;
     }
+
     .container {
       background: var(--glass-bg);
       padding: 50px 35px;
@@ -67,78 +146,82 @@
       border: 1px solid var(--glass-border);
       transition: all 0.4s ease;
     }
-    .off-center-image {
+
+    .tooltip-container {
+        position: absolute;
+        top: 20%; /* This moves it up */
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        animation: fadeIn 1.5s ease forwards;
+        animation-delay: 0.6s;
+    }
+
+    .tooltip-container::after {
+      content: attr(data-tooltip);
       position: absolute;
-      top: 40%; /* Slightly above center (50%) */
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translate(var(--random-x, 0%), var(--random-y, 0%));
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      white-space: pre;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 10;
+      pointer-events: none;
+      font-style: italic;
+      background: linear-gradient(145deg, rgba(0,0,0,0.85), rgba(30,30,30,0.9));
+      color: #00c3ff;
+      border: 1px solid #00c3ff44;
+      box-shadow: 0 0 12px rgba(0,195,255,0.3);
+    }
+
+    .tooltip-container:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .tooltip-container img {
+      position: absolute;
+      top: 10%;
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 150px;
-      opacity: 1;
-      z-index: 1;
-      pointer-events: auto;
       cursor: pointer;
-      filter: drop-shadow(0 4px 10px rgba(0, 195, 255, 0.5));
+      filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.5));
+      animation: blurPulse 3s infinite ease-in-out;
       transition: transform 0.3s ease, filter 0.3s ease;
     }
 
-    .off-center-image:hover {
-      transform: translate(-50%, -50%) scale(1.05);
-      filter: drop-shadow(0 6px 15px rgba(0, 195, 255, 0.7));
-    }
-    .eclipse-wrapper {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    
-    .eclipse-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      position: relative;
-      z-index: 2;
-    }
-    
-    /* Animated Glow Effect */
-    .eclipse-wrapper::before {
-      content: "";
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        #00c3ff,
-        #ff6a00,
-        #ee0979,
-        #00c3ff
-      );
-      filter: blur(25px);
-      animation: rotateGlow 4s linear infinite;
-      z-index: 1;
+    .tooltip-container img:hover {
+    animation: rotateSpin 1.6s ease-in-out infinite;
     }
 
-@keyframes rotateGlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+    @keyframes rotateSpin {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
 
     h1 {
       font-size: 2.8rem;
       font-weight: 600;
       margin-bottom: 14px;
       color: var(--highlight);
+      display: flex;
+      justify-content: center;
+      gap: 0.2em;
+    }
+
+    h1 span {
+      display: inline-block;
+      opacity: 0;
+      animation: randomTextReveal 1s ease-in-out forwards;
     }
 
     p {
@@ -183,23 +266,64 @@
       .container {
         padding: 30px 20px;
       }
-      
     }
   </style>
 </head>
 <body>
-  <div class="eclipse-wrapper">
-    <img src="favicon.png" alt="Decorative" class="eclipse-img" />
+  <div class="tooltip-container" data-tooltip="&#10;Discord: @floodedknight&#10; &#10;Youtube: @floodedknight9240&#10; ">
+    <img src="favicon.png" alt="Decorative" />
   </div>
-  <h1 class="gradient-text">FloodedKnight</h1>
-  <!--
-  <p>TestCH<br>ANGE</p>
-  <div class="links">
-    <a href="#"> More<br>stuff</a>
-  </div>-->
+  <h1 id="dynamic-text"></h1>
+  <div class="buttons-container" id="buttons-container"></div>
   <script>
+    // CONFIGURATION START
+    const numOfButtons = 3; // Set between 1-10
+    const buttonsConfig = [
+        { text: "Skripts", textColor: "#ffbb00" },
+        { text: "Placeholder", textColor: "#ffbb00" },
+        { text: "Placeholder", textColor: "#ffbb00" }
+    ];
+    // CONFIGURATION END
+
+    const buttonsContainer = document.getElementById("buttons-container");
+    
+    // Create buttons based on configuration
+    buttonsConfig.slice(0, numOfButtons).forEach(button => {
+        const btn = document.createElement("button");
+        btn.className = "custom-button";
+        btn.textContent = button.text;
+        btn.style.color = button.textColor;
+        btn.style.borderColor = `${button.textColor}cc`; /* More opaque border */
+        buttonsContainer.appendChild(btn);
+    });
+    const text = "FloodedKnight";
+    const container = document.getElementById("dynamic-text");
+
+    [...text].forEach((char, i) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.animationDelay = `${Math.random() * 0.5}s`;
+      container.appendChild(span);
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       console.log("Website Loaded!");
+    });
+    const tooltips = document.querySelectorAll('.tooltip-container');
+
+    tooltips.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            const randomX = Math.floor(Math.random() * 201) - 100;
+            const randomY = Math.floor(Math.random() * 201) - 100;
+            el.style.setProperty('--random-x', `${randomX}%`);
+            el.style.setProperty('--random-y', `${randomY}%`);
+        });
+    });
+    btn.addEventListener("mouseenter", () => {
+        btn.style.boxShadow = `0 0 20px ${button.textColor}88`;
+    });
+    btn.addEventListener("mouseleave", () => {
+        btn.style.boxShadow = "none";
     });
   </script>
 </body>
