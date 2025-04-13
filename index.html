@@ -279,9 +279,9 @@
     // CONFIGURATION START
     const numOfButtons = 3; // Set between 1-10
     const buttonsConfig = [
-        { text: "Skripts", textColor: "#ffbb00" },
-        { text: "Placeholder", textColor: "#ffbb00" },
-        { text: "Placeholder", textColor: "#ffbb00" }
+        { text: "Skripts", textColor: "#ffbb00", link: "https://www.youtube.com/watch?v=xaqIPw74CkQ" },
+        { text: "Placeholder", textColor: "#ffbb00", link: "https://www.youtube.com/watch?v=xaqIPw74CkQ" },
+        { text: "Placeholder", textColor: "#ffbb00", link: "https://www.youtube.com/watch?v=xaqIPw74CkQ" }
     ];
     // CONFIGURATION END
 
@@ -294,6 +294,12 @@
         btn.textContent = button.text;
         btn.style.color = button.textColor;
         btn.style.borderColor = `${button.textColor}cc`; /* More opaque border */
+        
+        // Add click event to redirect to the link
+        btn.addEventListener("click", () => {
+            window.location.href = button.link;
+        });
+
         buttonsContainer.appendChild(btn);
     });
     const text = "FloodedKnight";
