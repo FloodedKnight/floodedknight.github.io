@@ -85,6 +85,44 @@
       transform: translate(-50%, -50%) scale(1.05);
       filter: drop-shadow(0 6px 15px rgba(0, 195, 255, 0.7));
     }
+    .eclipse-img {
+      position: relative;
+      width: 200px; /* or your preferred size */
+      height: 200px;
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+/* Animated Glow */
+    .eclipse-img::after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 220px; /* slightly bigger than the image */
+      height: 220px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        #00c3ff,
+        #ff6a00,
+        #ee0979,
+        #00c3ff
+      );
+      filter: blur(25px);
+      animation: rotateGlow 4s linear infinite;
+      z-index: -1;
+    }
+
+@keyframes rotateGlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
     h1 {
       font-size: 2.8rem;
