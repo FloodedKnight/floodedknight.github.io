@@ -200,8 +200,10 @@
     }
 
     .tooltip-container img:hover {
-    animation: rotateSpin 1.6s ease-in-out infinite;
+      transform: translate(-50%, -50%) scale(1.2);
+      filter: drop-shadow(0 4px 25px rgba(255, 255, 255, 1));
     }
+
 
     @keyframes rotateSpin {
     0%   { transform: translate(-50%, -50%) rotate(0deg); }
