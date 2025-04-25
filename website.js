@@ -74,57 +74,57 @@ window.addEventListener("wheel", (gridZoom) => {
 }, { passive: false });
 
 // Part below by AI
-document.addEventListener("click", (e) => {
-    let circleCoords = [];
-    const getX = e.clientX;
-    const getY = e.clientY;
+// document.addEventListener("click", (e) => {
+//     let circleCoords = [];
+//     const getX = e.clientX;
+//     const getY = e.clientY;
 
-    let remainingCircles = [...circles];
+//     let remainingCircles = [...circles];
 
-    for (let i = 0; i < 1000; i++) {
-        let closestCircle = null;
-        let minDistance = Infinity;
+//     for (let i = 0; i < 1000; i++) {
+//         let closestCircle = null;
+//         let minDistance = Infinity;
 
-        remainingCircles.forEach(circle => {
-            const rect = circle.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
+//         remainingCircles.forEach(circle => {
+//             const rect = circle.getBoundingClientRect();
+//             const cx = rect.left + rect.width / 2;
+//             const cy = rect.top + rect.height / 2;
 
-            const dx = getX - cx;
-            const dy = getY - cy;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+//             const dx = getX - cx;
+//             const dy = getY - cy;
+//             const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestCircle = circle;
-            }
-        });
+//             if (distance < minDistance) {
+//                 minDistance = distance;
+//                 closestCircle = circle;
+//             }
+//         });
 
-        if (closestCircle) {
-            circleCoords.push(closestCircle);
-            remainingCircles = remainingCircles.filter(c => c !== closestCircle); // remove it from future checks
-        }
-    }
+//         if (closestCircle) {
+//             circleCoords.push(closestCircle);
+//             remainingCircles = remainingCircles.filter(c => c !== closestCircle); // remove it from future checks
+//         }
+//     }
 
 
-    circleCoords.forEach((circle, index) => {
-        if (cooldownCircles.has(circle)) return; // skip if on cooldown
+//     circleCoords.forEach((circle, index) => {
+//         if (cooldownCircles.has(circle)) return; // skip if on cooldown
 
-        cooldownCircles.add(circle); // put on cooldown
-        setTimeout(() => {
-            circle.style.transform = `scale(3)`;
+//         cooldownCircles.add(circle); // put on cooldown
+//         setTimeout(() => {
+//             circle.style.transform = `scale(3)`;
 
-            // Reset after 1 second
-            setTimeout(() => {
-                circle.style.backgroundColor = "#515151";
-                circle.style.transform = `scale(1)`;
-            }, 1000);
+//             // Reset after 1 second
+//             setTimeout(() => {
+//                 circle.style.backgroundColor = "#515151";
+//                 circle.style.transform = `scale(1)`;
+//             }, 1000);
 
-            // Remove cooldown after 2 seconds (or however long you want)
-            setTimeout(() => {
-                cooldownCircles.delete(circle);
-            }, 2000);
+//             // Remove cooldown after 2 seconds (or however long you want)
+//             setTimeout(() => {
+//                 cooldownCircles.delete(circle);
+//             }, 2000);
 
-        }, index * 1); // stagger timing
-    });
-});
+//         }, index * 1); // stagger timing
+//     });
+// });
