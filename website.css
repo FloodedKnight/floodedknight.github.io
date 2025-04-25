@@ -73,17 +73,19 @@ button {
 
   .circleContainer {
     display: flex;
+    position: absolute;
     flex-wrap: wrap;
-    gap: 25px;
+    gap: 50px;
     max-width: 2300px;
     z-index: 1;
   }
 
   .circles {
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    transition: background-color 0.5s ease-in-out, transform 0.2s ease-in-out;
+    transition: background-color 0.5s ease-in-out, transform 0.3s ease;
+    transform-origin: 0 0;
     background-color: #515151;
   }
 
@@ -99,5 +101,3 @@ button {
     border: 2px solid rgba(255, 255, 255, 0.8);
     background-color: #fff;
 }
-
-
