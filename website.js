@@ -1,3 +1,15 @@
+let paused = false;
+
+// Listen for tab visibility change
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    paused = true;
+  } else {
+    paused = false;
+    counter = 0; // Optionally reset counter if you want a fresh animation
+  }
+});
+
 function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
@@ -6,7 +18,21 @@ function shuffleArray(arr) {
     return arr;
   }
 
-//  Part above made with AI
+// let hue = 0;
+
+//   function updateBackground() {
+//     hue = (hue + 1) % 360;
+
+//     const color2 = `hsl(${(hue + 60) % 360}, 50%, 50%)`;
+
+//     document.body.style.background = `
+//     repeating-linear-gradient(rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 70px),
+//     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 70px),
+//     linear-gradient(180deg, ${color2}, #000000)`;
+
+//     document.head.appendChild(style);
+//     }
+//   setInterval(updateBackground,50); // Update every 30ms for smooth animation
 
 function randomNum(lowerBound, upperBound){
     return Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
@@ -27,33 +53,33 @@ const selectedCircles = new Set();
 const cooldownCircles = new Set();
 
 setInterval(() => {
-    circles = shuffleArray(circles)
+  if (paused) return;
 
+  circles = shuffleArray(circles);
+  const chosen = circles.slice(0, 20);
+  chosen.forEach((loopVal, index) => {
+      setTimeout(() => {
+          const r = Math.floor((Math.sin(counter) + 1) / 2 * 255);
+          const g = Math.floor((Math.sin(counter + 2) + 1) / 2 * 255);
+          const b = Math.floor((Math.sin(counter + 4) + 1) / 2 * 255);
+          const randBlur = randomNum(5, 10)
+          loopVal.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+          loopVal.style.boxShadow = `0px 0px ${randBlur}px 1px rgba(${r}, ${g}, ${b}, 1)`;
+          loopVal.style.transform = `scale(1.9)`;
+      }, 0);
 
-    circles.forEach((loopVal) => {
-        if (selectedCircles.has(loopVal)) return;
-        setTimeout(() => {
-            // let rand = randomNum(1, 2);
-            const r = Math.floor((Math.sin(counter) + 1) / 2 * 255);
-            const g = Math.floor((Math.sin(counter + 2) + 1) / 2 * 255);
-            const b = Math.floor((Math.sin(counter + 4) + 1) / 2 * 255);
-            loopVal.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-            
-            loopVal.style.transform = `scale(1.4)`;
-        }, counter * 10);
-        counter++;
-    });
-    
+      setTimeout(() => {
+          loopVal.style.backgroundColor = "rgba(51,51,51,1)";
+          loopVal.style.boxShadow = `0 0 0px rgba(51, 51, 51, 0.6)`;
+          loopVal.style.transform = `scale(1)`;
+      }, 1000);
 
-    circles.forEach(loopVal => {
-        loopVal.style.backgroundColor = "#515151";
-        loopVal.style.boxShadow = `0 0 0px rgba(51, 51, 51, 0.6)`;
-        loopVal.style.transform = `scale(1)`;
-    });
+      counter++;
+  });
 }, 2000);
 
 
-let zoomLevel = 1;
+let zoomLevel = 1.5;
 window.addEventListener("wheel", (gridZoom) => {
     gridZoom.preventDefault();
 
@@ -73,58 +99,5 @@ window.addEventListener("wheel", (gridZoom) => {
     container.style.transformOrigin = "center center";
 }, { passive: false });
 
-// Part below by AI
-// document.addEventListener("click", (e) => {
-//     let circleCoords = [];
-//     const getX = e.clientX;
-//     const getY = e.clientY;
-
-//     let remainingCircles = [...circles];
-
-//     for (let i = 0; i < 1000; i++) {
-//         let closestCircle = null;
-//         let minDistance = Infinity;
-
-//         remainingCircles.forEach(circle => {
-//             const rect = circle.getBoundingClientRect();
-//             const cx = rect.left + rect.width / 2;
-//             const cy = rect.top + rect.height / 2;
-
-//             const dx = getX - cx;
-//             const dy = getY - cy;
-//             const distance = Math.sqrt(dx * dx + dy * dy);
-
-//             if (distance < minDistance) {
-//                 minDistance = distance;
-//                 closestCircle = circle;
-//             }
-//         });
-
-//         if (closestCircle) {
-//             circleCoords.push(closestCircle);
-//             remainingCircles = remainingCircles.filter(c => c !== closestCircle); // remove it from future checks
-//         }
-//     }
 
 
-//     circleCoords.forEach((circle, index) => {
-//         if (cooldownCircles.has(circle)) return; // skip if on cooldown
-
-//         cooldownCircles.add(circle); // put on cooldown
-//         setTimeout(() => {
-//             circle.style.transform = `scale(3)`;
-
-//             // Reset after 1 second
-//             setTimeout(() => {
-//                 circle.style.backgroundColor = "#515151";
-//                 circle.style.transform = `scale(1)`;
-//             }, 1000);
-
-//             // Remove cooldown after 2 seconds (or however long you want)
-//             setTimeout(() => {
-//                 cooldownCircles.delete(circle);
-//             }, 2000);
-
-//         }, index * 1); // stagger timing
-//     });
-// });
